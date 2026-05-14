@@ -1,26 +1,26 @@
 export default function Footer() {
   return (
-    <footer className="relative z-10 py-10 border-t border-slate-200/60 dark:border-emerald-500/8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
-          {/* Logo */}
+    <footer className="relative z-10 border-t border-slate-200/70 py-8 dark:border-emerald-500/10 sm:py-10">
+      <div className="page-container">
+        <div className="flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
-              style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}>
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold text-white"
+              style={{ background: 'linear-gradient(135deg, #047857, #0f766e)' }}
+            >
               CH
             </div>
-            <span className="font-display font-bold text-base text-slate-900 dark:text-white">
+            <span className="font-display text-base font-bold text-slate-950 dark:text-white">
               Crop <span className="text-emerald-600 dark:text-emerald-400">Treat</span>
             </span>
           </div>
 
-          <p className="text-sm text-slate-400 dark:text-slate-500 text-center max-w-md leading-relaxed">
-            AI-powered crop disease and weed detection for maize & sugarcane.
-            Built for smarter, modern agriculture 🌱
+          <p className="max-w-md text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+            AI-powered crop disease and weed detection for maize and sugarcane.
           </p>
 
           <p className="text-xs text-slate-400 dark:text-slate-600">
-            © {new Date().getFullYear()} CropHealthAI
+            (c) {new Date().getFullYear()} Crop Treat
           </p>
         </div>
       </div>

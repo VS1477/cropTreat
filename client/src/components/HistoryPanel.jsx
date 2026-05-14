@@ -3,87 +3,83 @@ export default function HistoryPanel({ isOpen, onClose, history, onClear, darkMo
 
   return (
     <>
-      {/* Overlay */}
       <div
-        className="fixed inset-0 z-40 animate-fade-in lg:hidden"
+        className="fixed inset-0 z-40 animate-fade-in"
         style={{
-          background: darkMode ? 'rgba(0,0,0,0.5)' : 'rgba(15,23,42,0.4)',
+          background: darkMode ? 'rgba(0,0,0,0.54)' : 'rgba(15,23,42,0.42)',
           backdropFilter: 'blur(4px)',
           WebkitBackdropFilter: 'blur(4px)',
         }}
         onClick={onClose}
       />
 
-      {/* Panel */}
       <aside
-        className="fixed top-0 right-0 z-50 h-full w-80 max-w-[85vw] shadow-2xl transform transition-transform duration-300"
+        className="fixed inset-y-0 right-0 z-50 h-full w-full max-w-sm shadow-2xl sm:w-96"
         style={{
-          background: darkMode ? 'rgba(10,15,22,0.97)' : 'rgba(255,255,255,0.95)',
+          background: darkMode ? 'rgba(10,20,17,0.98)' : 'rgba(255,255,255,0.97)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          borderLeft: darkMode ? '1px solid rgba(16,185,129,0.1)' : '1px solid rgba(226,232,240,0.6)',
-          transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+          borderLeft: darkMode ? '1px solid rgba(45,212,191,0.14)' : '1px solid rgba(226,232,240,0.76)',
           boxShadow: darkMode
-            ? '-4px 0 30px rgba(0,0,0,0.4), 0 0 1px rgba(16,185,129,0.1)'
-            : '-4px 0 20px rgba(0,0,0,0.06)',
+            ? '-8px 0 34px rgba(0,0,0,0.42)'
+            : '-8px 0 28px rgba(15,23,42,0.10)',
         }}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-5"
+        <div
+          className="flex items-center justify-between gap-3 p-4 sm:p-5"
           style={{
-            borderBottom: darkMode ? '1px solid rgba(16,185,129,0.1)' : '1px solid rgba(226,232,240,0.8)',
-          }}>
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+            borderBottom: darkMode ? '1px solid rgba(45,212,191,0.12)' : '1px solid rgba(226,232,240,0.8)',
+          }}
+        >
+          <div className="flex min-w-0 items-center gap-2.5">
+            <div
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
               style={{
-                background: darkMode
-                  ? 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,78,59,0.2))'
-                  : 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05))',
-              }}>
-              <svg className="w-4 h-4" style={{ color: darkMode ? '#34d399' : '#059669' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                background: darkMode ? 'rgba(20,184,166,0.14)' : 'rgba(20,184,166,0.1)',
+              }}
+            >
+              <svg className="h-4 w-4 text-emerald-600 dark:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
             </div>
-            <h3 className="font-display font-bold" style={{ color: darkMode ? '#f1f5f9' : '#0f172a' }}>Scan History</h3>
+            <h3 className="truncate font-display font-bold text-slate-950 dark:text-white">Scan History</h3>
           </div>
           <div className="flex items-center gap-1">
             {history.length > 0 && (
               <button
                 onClick={onClear}
-                className="text-xs text-red-500 hover:text-red-400 px-3 py-1.5 rounded-full transition-colors font-medium"
-                style={{ ':hover': { background: darkMode ? 'rgba(239,68,68,0.1)' : 'rgba(239,68,68,0.05)' } }}
+                className="rounded-lg px-3 py-1.5 text-xs font-semibold text-red-600 transition-colors hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-900/20"
               >
                 Clear all
               </button>
             )}
             <button
               onClick={onClose}
-              className="p-2 rounded-full transition-colors"
-              style={{ color: darkMode ? '#64748b' : '#94a3b8' }}
+              className="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5"
+              aria-label="Close history"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* History list */}
-        <div className="overflow-y-auto h-[calc(100%-72px)] p-4 space-y-2.5">
+        <div className="h-[calc(100%-73px)] space-y-2.5 overflow-y-auto p-4">
           {history.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-48 text-center">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
+            <div className="flex h-56 flex-col items-center justify-center text-center">
+              <div
+                className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg"
                 style={{
-                  background: darkMode
-                    ? 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))'
-                    : 'linear-gradient(135deg, rgba(226,232,240,0.5), rgba(226,232,240,0.2))',
-                }}>
-                <svg className="w-7 h-7" style={{ color: darkMode ? '#334155' : '#cbd5e1' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  background: darkMode ? 'rgba(255,255,255,0.04)' : 'rgba(226,232,240,0.58)',
+                }}
+              >
+                <svg className="h-7 w-7 text-slate-300 dark:text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
               </div>
-              <p className="text-sm font-medium" style={{ color: darkMode ? '#475569' : '#94a3b8' }}>No scans yet</p>
-              <p className="text-xs mt-1" style={{ color: darkMode ? '#334155' : '#cbd5e1' }}>Upload an image to get started</p>
+              <p className="text-sm font-medium text-slate-500 dark:text-slate-500">No scans yet</p>
+              <p className="mt-1 text-xs text-slate-400 dark:text-slate-600">Upload an image to get started</p>
             </div>
           ) : (
             history.map((item, i) => {
@@ -93,51 +89,43 @@ export default function HistoryPanel({ isOpen, onClose, history, onClear, darkMo
               return (
                 <div
                   key={i}
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 animate-fade-in"
+                  className="flex items-center gap-3 rounded-lg border p-3 animate-fade-in"
                   style={{
-                    background: darkMode ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.6)',
-                    border: darkMode ? '1px solid rgba(16,185,129,0.08)' : '1px solid rgba(241,245,249,1)',
+                    background: darkMode ? 'rgba(255,255,255,0.04)' : 'rgba(248,250,252,0.82)',
+                    borderColor: darkMode ? 'rgba(45,212,191,0.1)' : 'rgba(226,232,240,0.9)',
                   }}
-                  onMouseOver={(e) => e.currentTarget.style.background = darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(248,250,252,1)'}
-                  onMouseOut={(e) => e.currentTarget.style.background = darkMode ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.6)'}
                 >
                   {item.imageUrl ? (
-                    <img src={item.imageUrl} alt="" className="w-12 h-12 rounded-xl object-cover shrink-0"
+                    <img
+                      src={item.imageUrl}
+                      alt=""
+                      className="h-12 w-12 shrink-0 rounded-lg object-cover"
                       style={{
-                        border: darkMode ? '1px solid rgba(16,185,129,0.1)' : '1px solid #f1f5f9',
-                      }} />
+                        border: darkMode ? '1px solid rgba(45,212,191,0.12)' : '1px solid #e2e8f0',
+                      }}
+                    />
                   ) : (
-                    <div className="w-12 h-12 rounded-xl shrink-0"
-                      style={{ background: darkMode ? 'rgba(255,255,255,0.04)' : '#f1f5f9' }} />
+                    <div className="h-12 w-12 shrink-0 rounded-lg bg-slate-100 dark:bg-white/5" />
                   )}
 
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <span className={`w-2 h-2 rounded-full shrink-0 ${isPositive ? 'bg-emerald-500' : 'bg-red-500'}`}
-                        style={darkMode ? {
-                          boxShadow: isPositive
-                            ? '0 0 6px rgba(16,185,129,0.4)'
-                            : '0 0 6px rgba(239,68,68,0.4)'
-                        } : {}} />
-                      <p className="text-sm font-semibold truncate"
-                        style={{ color: darkMode ? '#e2e8f0' : '#1e293b' }}>
-                        {isDiseaseType ? item.data.disease : item.data.result}
+                      <span className={`h-2 w-2 shrink-0 rounded-full ${isPositive ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                      <p className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">
+                        {isDiseaseType ? item.data.disease : (item.data.weed_type || item.data.result)}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[10px] uppercase font-semibold tracking-wide"
-                        style={{ color: darkMode ? '#475569' : '#94a3b8' }}>
-                        {isDiseaseType ? '🌽 Disease' : '🌿 Weed'}
+                    <div className="mt-0.5 flex items-center gap-2">
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                        {isDiseaseType ? 'Disease' : 'Weed'}
                       </span>
-                      <span className="text-[10px] font-medium"
-                        style={{ color: darkMode ? '#475569' : '#94a3b8' }}>
+                      <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500">
                         {item.data.confidence}%
                       </span>
                     </div>
                   </div>
 
-                  <span className="text-[10px] shrink-0 font-medium"
-                    style={{ color: darkMode ? '#334155' : '#94a3b8' }}>
+                  <span className="shrink-0 text-[10px] font-medium text-slate-400 dark:text-slate-600">
                     {item.time}
                   </span>
                 </div>

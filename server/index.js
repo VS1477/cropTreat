@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -6,11 +8,14 @@ const FormData = require("form-data");
 const path = require("path");
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "http://127.0.0.1:8000";
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "*";
 
 // --- Middleware ---
-app.use(cors());
+app.use(cors({
+  origin: CLIENT_ORIGIN === "*" ? "*" : CLIENT_ORIGIN.split(",").map((origin) => origin.trim()),
+}));
 app.use(express.json());
 
 // --- Multer config ---
@@ -119,6 +124,6 @@ app.use((err, _req, res, _next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Node.js proxy running on http://localhost:${PORT}`);
+  console.log(`Node.js proxy running on port ${PORT}`);
   console.log(`   Forwarding to AI service at ${AI_SERVICE_URL}`);
 });
