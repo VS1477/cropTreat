@@ -50,7 +50,10 @@ async function forwardToPython(endpoint, fileBuffer, originalName, mimetype) {
 
   if (!response.ok) {
     const errorBody = await response.text();
-    throw new Error(`AI service error (${response.status}): ${errorBody}`);
+    const message = errorBody || response.statusText || "Unknown AI service error";
+    const error = new Error(`AI service error (${response.status}): ${message}`);
+    error.status = response.status;
+    throw error;
   }
 
   return response.json();
@@ -79,8 +82,8 @@ app.post("/predict-disease", upload.single("image"), async (req, res) => {
     return res.json(result);
   } catch (err) {
     console.error("Disease prediction error:", err.message);
-    return res.status(500).json({
-      error: "Failed to process the image. Please ensure the AI service is running.",
+    return res.status(err.status || 500).json({
+      error: err.message || "Failed to process the image. Please ensure the AI service is running.",
     });
   }
 });
@@ -102,8 +105,8 @@ app.post("/predict-weed", upload.single("image"), async (req, res) => {
     return res.json(result);
   } catch (err) {
     console.error("Weed prediction error:", err.message);
-    return res.status(500).json({
-      error: "Failed to process the image. Please ensure the AI service is running.",
+    return res.status(err.status || 500).json({
+      error: err.message || "Failed to process the image. Please ensure the AI service is running.",
     });
   }
 });

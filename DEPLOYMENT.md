@@ -78,7 +78,7 @@ pip install -r requirements.txt
 Start command:
 
 ```text
-gunicorn app:app
+gunicorn app:app --workers 1 --timeout 180 --bind 0.0.0.0:$PORT
 ```
 
 Environment variables:
